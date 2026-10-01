@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Serviços - Sistema de Serviços{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold m-0">Gestão de Serviços</h2>
+    <a href="{% url 'servicos:novo' %}" class="btn btn-success">
+        + Registar Novo Serviço
+    </a>
+</div>
+
+<!-- Barra de Pesquisa -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <form method="get" class="row g-2">
+            <div class="col-md-9">
+                <input type="text" name="busca" class="form-control" 
+                       placeholder="Pesquisar serviço por descrição..." value="{{ termo_busca }}">
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-outline-success w-100">Pesquisar</button>
+                {% if termo_busca %}
+                    <a href="{% url 'servicos:listar' %}" class="btn btn-outline-secondary">Limpar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tabela de Serviços -->
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Duração</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in servicos %}
+                <tr>
+                    <td class="fw-semibold">{{ s.descricao }}</td>
+                    <td>R$ {{ s.valor }}</td>
+                    <td>{{ s.duracao }} min</td>
+                    <td class="text-center">
+                        <a href="{% url 'servicos:alternar_status' s.pk %}" class="text-decoration-none">
+                            {% if s.ativo %}
+                                <span class="badge bg-success" role="button" title="Clique para desativar">Ativo</span>
+                            {% else %}
+                                <span class="badge bg-secondary" role="button" title="Clique para ativar">Inativo</span>
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a href="{% url 'servicos:editar' s.pk %}" class="btn btn-sm btn-outline-primary me-1">
+                            Editar
+                        </a>
+                        <a href="{% url 'servicos:excluir' s.pk %}" class="btn btn-sm btn-outline-danger">
+                            Excluir
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                        Nenhum serviço registado até ao momento.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

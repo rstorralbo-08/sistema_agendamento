@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Painel Principal - Sistema de Serviços{% endblock %}
+
+{% csrf_token %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="fw-bold">Painel de Controle</h2>
+        <p class="text-muted">Bem-vindo(a), <strong>{{ request.user.username }}</strong>!</p>
+    </div>
+</div>
+
+<!-- Métricas solicitadas no trabalho -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <h6 class="text-muted text-uppercase small">Clientes Registrados</h6>
+            <h2 class="display-6 fw-bold text-primary mb-0">{{ total_clientes }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <h6 class="text-muted text-uppercase small">Serviços Ativos</h6>
+            <h2 class="display-6 fw-bold text-success mb-0">{{ total_servicos }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <h6 class="text-muted text-uppercase small">Agendamentos Hoje</h6>
+            <h2 class="display-6 fw-bold text-warning mb-0">{{ agendamentos_hoje }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-3">
+            <h6 class="text-muted text-uppercase small">Agendamentos Realizados</h6>
+            <h2 class="display-6 fw-bold text-info mb-0">{{ agendamentos_realizados }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Acesso Rápido -->
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title fw-bold mb-3">Gestão do Sistema</h5>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{% url 'clientes:listar' %}" class="btn btn-outline-primary">
+                Gerir Clientes
+            </a>
+            <a href="{% url 'servicos:listar' %}" class="btn btn-outline-success">
+                Gerir Serviços
+            </a>
+            <a href="{% url 'agendamento:listar' %}" class="btn btn-outline-warning">
+                Gerir Agendamentos
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Agendamentos - Sistema de Serviços{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold m-0">Gestão de Agendamentos</h2>
+    <a href="{% url 'agendamento:novo' %}" class="btn btn-warning fw-semibold">
+        + Novo Agendamento
+    </a>
+</div>
+
+<!-- Filtros de Pesquisa -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <form method="get" class="row g-2 align-items-center">
+            <div class="col-md-4">
+                <input type="date" name="data" class="form-control" value="{{ data_filtro }}">
+            </div>
+            <div class="col-md-4">
+                <select name="status" class="form-select">
+                    <option value="">Todos os status</option>
+                    {% for valor, rotulo in opcoes_status %}
+                        <option value="{{ valor }}" {% if status_filtro == valor %}selected{% endif %}>{{ rotulo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Filtrar</button>
+                {% if status_filtro or data_filtro %}
+                    <a href="{% url 'agendamento:listar' %}" class="btn btn-outline-secondary">Limpar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tabela de Agendamentos -->
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Data & Horário</th>
+                    <th>Cliente</th>
+                    <th>Serviço</th>
+                    <th>Valor</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ag in agendamentos %}
+                <tr>
+                    <td class="fw-semibold">{{ ag.data|date:"d/m/Y" }} às {{ ag.horario|time:"H:i" }}</td>
+                    <td>{{ ag.cliente.nome }}</td>
+                    <td>{{ ag.servico.descricao }}</td>
+                    <td>R$ {{ ag.servico.valor }}</td>
+                    <td class="text-center">
+                        {% if ag.status == 'AGENDADO' %}
+                            <span class="badge bg-primary">Agendado</span>
+                        {% elif ag.status == 'REALIZADO' %}
+                            <span class="badge bg-success">Realizado</span>
+                        {% else %}
+                            <span class="badge bg-danger">Cancelado</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="{% url 'agendamento:editar' ag.pk %}" class="btn btn-sm btn-outline-primary me-1">
+                            Editar
+                        </a>
+                        <a href="{% url 'agendamento:excluir' ag.pk %}" class="btn btn-sm btn-outline-danger">
+                            Excluir
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">
+                        Nenhum agendamento registado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
