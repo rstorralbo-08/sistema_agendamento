@@ -1,0 +1,49 @@
+# Ambientes Virtuais (Virtual Environments)
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Ficheiros de Variáveis de Ambiente
+.env
+.env.local
+.env.*.local
+*.env
+
+# Bytecode e caches do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Base de Dados Local (Não deve ir para o repositório Git)
+*.sqlite3
+*.sqlite3-journal
+*.db
+
+# Ficheiros estáticos e uploads de media locais
+local_settings.py
+db.sqlite3
+/media/
+/staticfiles/
+
+# Logs e ficheiros temporários
+*.log
+*.pot
+*.cache
+
+# Configurações de IDEs e Editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Ficheiros de teste e cobertura (se existirem)
+.coverage
+htmlcov/
+.pytest_cache/
