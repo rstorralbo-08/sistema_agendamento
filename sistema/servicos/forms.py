@@ -9,7 +9,7 @@ class ServicoForm(forms.ModelForm):
         widgets = {
             'descricao': forms.TextInput(attrs={
                 'class': 'form-control', 
-                'placeholder': 'Ex: Manutenção de computador, Formatação...'
+                'placeholder': 'Ex: Toxina botulínica (botox), harmonização facial...'
             }),
             'valor': forms.NumberInput(attrs={
                 'class': 'form-control', 

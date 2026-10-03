@@ -38,6 +38,7 @@
                     <th>Email</th>
                     <th>Telefone</th>
                     <th>CPF</th>
+                    <th>Nascimento</th>
                     <th class="text-center">Estado</th>
                     <th class="text-end">Ações</th>
                 </tr>
@@ -49,6 +50,7 @@
                     <td>{{ c.email }}</td>
                     <td>{{ c.telefone }}</td>
                     <td>{{ c.cpf }}</td>
+                    <td>{{ c.data_nascimento|date:"d/m/Y"|default:"-" }}</td>
                     <td class="text-center">
                         <a href="{% url 'clientes:alternar_status' c.pk %}" class="text-decoration-none">
                             {% if c.ativo %}

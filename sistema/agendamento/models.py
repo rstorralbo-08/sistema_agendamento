@@ -20,6 +20,7 @@ class Agendamento(models.Model):
         on_delete=models.PROTECT, 
         related_name='agendamentos'
     )
+
     data = models.DateField()
     horario = models.TimeField()
     observacao = models.TextField(blank=True, null=True)

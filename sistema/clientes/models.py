@@ -5,8 +5,13 @@ class Cliente(models.Model):
     email = models.EmailField(unique=True)
     telefone = models.CharField(max_length=20)
     cpf = models.CharField(max_length=14, unique=True)
-    data_cadastro = models.DateTimeField(auto_now_add=True)
+    data_nascimento = models.DateField(
+        null=True, 
+        blank=True, 
+        verbose_name="Data de Nascimento"
+    )
     ativo = models.BooleanField(default=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "Cliente"
@@ -14,4 +19,4 @@ class Cliente(models.Model):
         ordering = ['nome']
 
     def __str__(self):
-        return f"{self.nome} ({self.cpf})"
+        return self.nome
